@@ -7,7 +7,7 @@ class Header extends Component {
     return (
       <header className="Header">
 
-        <h1>React App</h1>
+        <h1>TODO LIST</h1>
         
       </header>
     );

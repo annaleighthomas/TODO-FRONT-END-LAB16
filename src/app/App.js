@@ -30,7 +30,7 @@ class App extends Component {
                 )}
               />
 
-              <Route path="auth" exact={true}
+              <Route path="/auth" exact={true}
                 render={routerProps => (
                   <AuthPage {...routerProps}/>
                 )}
