@@ -1,4 +1,5 @@
 import { Component } from 'react';
+import { signUp, signIn } from '../utils/todo-api';
 import './AuthPage.css';
 
 export default class AuthPage extends Component {
@@ -6,19 +7,33 @@ export default class AuthPage extends Component {
     isSignUp: true,
     name: '',
     email: '',
-    password: ''
+    password: '',
+    error: ''
   }
 
   handleSwitch = () => {
     this.setState({ isSignUp: !this.state.isSignUp });
   }
 
-  handleSubmit = e => {
+  handleSubmit = async e => {
+    const { isSignUp } = this.state;
     e.preventDefault();
+
+    this.setState({ error: '' });
+
+    try {
+      const action = isSignUp ? signUp : signIn;
+      const user = await action(this.state);
+
+      console.log(user);
+    }
+    catch (err) {
+      this.setState({ error: err.message });
+    }
   }
 
   handleNameChange = ({ target }) => {
-    this.setState({ email: target.value });
+    this.setState({ name: target.value });
   }
 
   handleEmailChange = ({ target }) => {
@@ -30,7 +45,7 @@ export default class AuthPage extends Component {
   }
 
   render() {
-    const { isSignUp, name, email, password } = this.state;
+    const { isSignUp, name, email, password, error } = this.state;
 
     return (
       <form className="AuthPage" onSubmit={this.handleSubmit}>
@@ -46,7 +61,7 @@ export default class AuthPage extends Component {
           <label>
             <span>Email</span>
             <input name="email" required={true}
-              onChange={this.handleEmailChange}/>
+              value={email} onChange={this.handleEmailChange}/>
           </label>
         </p>
 
@@ -54,7 +69,7 @@ export default class AuthPage extends Component {
           <label>
             <span>Password</span>
             <input name="password" type="password" required={true}
-              value={password} onChange={this/this.handlePasswordChange}/>
+              value={password} onChange={this.handlePasswordChange}/>
           </label>
         </p>
 
@@ -63,13 +78,14 @@ export default class AuthPage extends Component {
         </p>
 
         <p>
-          <button type="button" className="swithc" onClick={this.handleSwitch}>
+          <button type="button" className="switch" onClick={this.handleSwitch}>
             {isSignUp
               ? 'Already have an account?'
               : 'Need to create an account?'
             }
           </button>
         </p>
+        {error && <p>{error}</p>}
       </form>
     );
   }
