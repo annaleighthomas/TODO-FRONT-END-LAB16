@@ -22,6 +22,16 @@ export async function signIn(credentials) {
   if (response.status === 400) {
     throw response.body;
   }
-  
+
   return response.body;
+}
+
+export async function addTask(task) {
+  const response = await request
+    .post('/api/todos')
+    .set('Authorization', window.localStorage.getItem('TOKEN'))
+    .send(task);
+
+  return response.body;
+
 }
