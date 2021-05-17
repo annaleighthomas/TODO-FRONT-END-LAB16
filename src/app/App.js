@@ -3,6 +3,7 @@ import Header from './Header';
 import Footer from './Footer';
 import Home from '../home/Home';
 import AuthPage from '../auth/AuthPage';
+import TodoTrackerPage from '../todolist-tracker/TodoTrackerPage';
 import {
   BrowserRouter as Router,
   Route,
@@ -53,7 +54,7 @@ class App extends Component {
                 render={routerProps => (
                   token
 
-                    ? <div>todo list tracker page present</div>
+                    ? <TodoTrackerPage {...routerProps} />
                     : <Redirect to="/auth" />
                 )}
               />
