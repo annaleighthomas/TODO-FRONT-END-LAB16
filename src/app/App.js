@@ -2,6 +2,7 @@ import { Component } from 'react';
 import Header from './Header';
 import Footer from './Footer';
 import Home from '../home/Home';
+import AuthPage from '../auth/AuthPage';
 import {
   BrowserRouter as Router,
   Route,
@@ -11,6 +12,9 @@ import {
 import './App.css';
 
 class App extends Component {
+  state = {
+    user: null
+  }
 
   render() {
     return (
@@ -26,9 +30,15 @@ class App extends Component {
                 )}
               />
 
+              <Route path="auth" exact={true}
+                render={routerProps => (
+                  <AuthPage {...routerProps}/>
+                )}
+              />
+
               <Route path="/resources" exact={true}
                 render={routerProps => (
-                  <div>Implement a page of resources</div>
+                  <div>page here</div>
                 )}
               />
 
