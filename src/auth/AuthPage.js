@@ -17,6 +17,8 @@ export default class AuthPage extends Component {
 
   handleSubmit = async e => {
     const { isSignUp } = this.state;
+    const { onUser, history } = this.props;
+
     e.preventDefault();
 
     this.setState({ error: '' });
@@ -25,7 +27,9 @@ export default class AuthPage extends Component {
       const action = isSignUp ? signUp : signIn;
       const user = await action(this.state);
 
-      console.log(user);
+      onUser(user);
+
+      history.push('/');
     }
     catch (err) {
       this.setState({ error: err.message });
@@ -52,8 +56,8 @@ export default class AuthPage extends Component {
         {isSignUp && <p>
           <label>
             <span>Name</span>
-            <input name="name" value={name} required={true} 
-              onChange={this.handleNameChange}/>
+            <input name="name" value={name} required={true}
+              onChange={this.handleNameChange} />
           </label>
         </p>}
 
@@ -61,7 +65,7 @@ export default class AuthPage extends Component {
           <label>
             <span>Email</span>
             <input name="email" required={true}
-              value={email} onChange={this.handleEmailChange}/>
+              value={email} onChange={this.handleEmailChange} />
           </label>
         </p>
 
@@ -69,7 +73,7 @@ export default class AuthPage extends Component {
           <label>
             <span>Password</span>
             <input name="password" type="password" required={true}
-              value={password} onChange={this.handlePasswordChange}/>
+              value={password} onChange={this.handlePasswordChange} />
           </label>
         </p>
 
