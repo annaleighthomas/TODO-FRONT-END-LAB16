@@ -10,13 +10,19 @@ export default class TodoTrackerPage extends Component {
 
   async componentDidMount() {
     try {
-      const todos = await getTodos();
-      this.setState({ todos: todos });
+      const todoResponse = await getTodos();
+      console.log(todoResponse);
+      if (todoResponse === null) {
+        this.setState({ todos: [] });
+      } else {
+        this.setState({ todos: todoResponse });
+      }
+      
 
-      console.log(todos);
+      console.log('todos: ', todoResponse);
     }
     catch (err) {
-      console.log(err);
+      console.log('err: ', err);
     }
   }
 
@@ -25,7 +31,7 @@ export default class TodoTrackerPage extends Component {
     const { newTask, todos } = this.state;
     
     try {
-      const addedTask = await addTask({ task: newTask });
+      const addedTask = await addTask({ task: newTask, completed: false });
       const updatedTodos = [...todos, addedTask];
       this.setState({
         todos: updatedTodos,
