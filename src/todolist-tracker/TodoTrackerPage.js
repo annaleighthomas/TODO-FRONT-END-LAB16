@@ -63,9 +63,13 @@ handleDelete = async id => {
 }
 
 handleCompletedTask = async todo => {
+  const { todos } = this.state;
   try {
-    await todoCompleted(todo);
-    this.setState({ completed: true });
+    const completedTodo = await todoCompleted(todo, { task: todo.task, completed: true });
+
+    const todoArray = todos.map(task => task.id === todo.id ? completedTodo : task);
+    this.setState({ todos: todoArray });
+    console.log(this.state.completed);
   }
   catch (err) {
     console.log(err);
@@ -75,18 +79,18 @@ handleCompletedTask = async todo => {
 
 render() {
   const { newTask, todos } = this.state;
-
+  console.log(todos);
   return (
     <div className="TodoTrackerPage">
       <form onSubmit={this.handleAdd}>
-        Add New Task:
-        <input value={newTask} onChange={this.handleNewTask}/>
+        
+        <input value={newTask} className="input-box" placeholder="ADD A TASK..." onChange={this.handleNewTask}/>
       </form>
 
       <ul>
         {todos.map(task => (
           <li key={task.id}>
-            <h2>{task.task}</h2>
+            <h2 style={{ textDecoration: task.completed ? 'line-through' : 'none' }}>{task.task}</h2>
             <input type="checkbox" value={task.completed}
               onChange={() => this.handleCompletedTask(task)}/>
             <button onClick={() =>
