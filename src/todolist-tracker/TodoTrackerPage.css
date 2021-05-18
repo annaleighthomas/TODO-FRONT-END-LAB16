@@ -1,3 +1,11 @@
 .TodoTrackerPage {
   padding: 30px;
 }
+
+.TodoTrackerPage li {
+  margin: 10px 0;
+  background: lightsteelblue;
+  padding: 5px;
+  display: flex;
+  justify-content: space-between;
+}
