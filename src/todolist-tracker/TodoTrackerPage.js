@@ -1,5 +1,5 @@
 import { Component } from 'react';
-import { addTask, getTodos, deleteTodos } from '../utils/todo-api.js';
+import { addTask, getTodos, deleteTodos, todoCompleted } from '../utils/todo-api.js';
 import './TodoTrackerPage.css';
 
 export default class TodoTrackerPage extends Component {
@@ -62,6 +62,17 @@ handleDelete = async id => {
   }
 }
 
+handleCompletedTask = async todo => {
+  try {
+    await todoCompleted(todo);
+    this.setState({ completed: true });
+  }
+  catch (err) {
+    console.log(err);
+  }
+}
+
+
 render() {
   const { newTask, todos } = this.state;
 
@@ -76,6 +87,8 @@ render() {
         {todos.map(task => (
           <li key={task.id}>
             <h2>{task.task}</h2>
+            <input type="checkbox" value={task.completed}
+              onChange={() => this.handleCompletedTask(task)}/>
             <button onClick={() =>
               this.handleDelete(task.id)}>X</button>
           </li>

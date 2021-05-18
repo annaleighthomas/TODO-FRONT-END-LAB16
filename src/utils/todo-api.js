@@ -55,3 +55,12 @@ export async function deleteTodos(id) {
 
   return response.body;
 }
+
+export async function todoCompleted(todo) {
+  const response = await request  
+    .put(`/api/todos/${todo.id}/completed`)
+    .send(todo)
+    .set('Authorization', window.localStorage.getItem('TOKEN'));
+
+  return response.body;
+}
