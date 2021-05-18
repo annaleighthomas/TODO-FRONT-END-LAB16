@@ -1,5 +1,5 @@
 import { Component } from 'react';
-import { addTask, getTodos } from '../utils/todo-api.js';
+import { addTask, getTodos, deleteTodos } from '../utils/todo-api.js';
 import './TodoTrackerPage.css';
 
 export default class TodoTrackerPage extends Component {
@@ -48,7 +48,18 @@ export default class TodoTrackerPage extends Component {
   }
 
 handleDelete = async id => {
-  console.log('you want to delete', id);
+  const { todos } = this.state;
+
+  try {
+    await deleteTodos(id);
+
+    const updatedTodos = todos.filter(todo => todo.id !== id);
+    this.setState({ todos: updatedTodos });
+
+  }
+  catch (err) {
+    console.log(err);
+  }
 }
 
 render() {
@@ -65,7 +76,8 @@ render() {
         {todos.map(task => (
           <li key={task.id}>
             <h2>{task.task}</h2>
-            <button>X</button>
+            <button onClick={() =>
+              this.handleDelete(task.id)}>X</button>
           </li>
         ))}
       </ul>

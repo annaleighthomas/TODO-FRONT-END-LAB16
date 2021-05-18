@@ -47,3 +47,11 @@ export async function getTodos() {
 
   return response.body;
 }
+export async function deleteTodos(id) {
+  const response = await request
+    .delete(`/todos/${id}`)
+    .set('Authorization',
+      window.localStorage.getItem('TOKEN'));
+
+  return response.body;
+}
