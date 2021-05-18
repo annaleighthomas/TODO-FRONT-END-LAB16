@@ -38,5 +38,5 @@
       "last 1 safari version"
     ]
   },
-  "proxy": "https://young-crag-99289.herokuapp.com"
+  "proxy": "https://young-crag-99289.herokuapp.com/api"
 }

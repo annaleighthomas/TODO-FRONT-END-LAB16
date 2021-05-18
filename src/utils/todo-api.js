@@ -2,7 +2,7 @@ import request from 'superagent';
 
 export async function signUp(credentials) {
   const response = await request
-    .post('/api/auth/signup')
+    .post('/auth/signup')
     .ok(res => res.status < 500)
     .send({ 
       name: credentials.name, 
@@ -19,7 +19,7 @@ export async function signUp(credentials) {
 
 export async function signIn(credentials) {
   const response = await request 
-    .post('/api/auth/signin')
+    .post('/auth/signin')
     .ok(res => res.status < 500)
     .send(credentials);
 
@@ -32,7 +32,7 @@ export async function signIn(credentials) {
 
 export async function addTask(task) {
   const response = await request
-    .post('/api/todos')
+    .post('/todos')
     .set('Authorization', window.localStorage.getItem('TOKEN'))
     .send(task);
 
@@ -42,7 +42,7 @@ export async function addTask(task) {
 
 export async function getTodos() {
   const response = await request
-    .get('/api/todos')
+    .get('/todos')
     .set('Authorization', window.localStorage.getItem('TOKEN'));
 
   return response.body;
