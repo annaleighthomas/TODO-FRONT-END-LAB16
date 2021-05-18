@@ -53,9 +53,8 @@ class App extends Component {
               <Route path="/todolist-tracker" exact={true}
                 render={routerProps => (
                   token
-
                     ? <TodoTrackerPage {...routerProps} />
-                    : <Redirect to="/auth" />
+                    : <Redirect to="/auth"/>
                 )}
               />
 
